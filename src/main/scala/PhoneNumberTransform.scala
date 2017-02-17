@@ -5,7 +5,7 @@ class PhoneNumberTransform {
   def toPossibleChars(phoneNumber: List[Int]): List[String] = {
     if (phoneNumber.isEmpty) List() else {
       val numberToLetters: List[Letters] = phoneNumber.map(toChar)
-      val initialLetters: List[Letters] = numberToLetters.head.map(List(_))
+      val initialLetters: List[Letters] = numberToLetters.head.map(List(_)) // WHY???
       val letterCombinations: List[Letters] = letterListBuilder(numberToLetters.tail, initialLetters)
       letterCombinations.map(_.mkString(""))
     }
