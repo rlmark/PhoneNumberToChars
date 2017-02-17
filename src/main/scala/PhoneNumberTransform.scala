@@ -4,19 +4,19 @@ class PhoneNumberTransform {
 
   def toPossibleChars(phoneNumber: List[Int]): List[String] = {
     if (phoneNumber.isEmpty) List() else {
-      val nToLetters: List[Letters] = phoneNumber.map(toChar)
-      val initialLetters = nToLetters.head.map(List(_))
-      val words = charListBuilder(nToLetters.tail, initialLetters).map(_.mkString(""))
-      words.filter(word => word.length == phoneNumber.length)
+      val numberToLetters: List[Letters] = phoneNumber.map(toChar)
+      val initialLetters: List[Letters] = numberToLetters.head.map(List(_))
+      val letterCombinations: List[Letters] = letterListBuilder(numberToLetters.tail, initialLetters)
+      letterCombinations.map(_.mkString(""))
     }
   }
 
-  def charListBuilder(numbersAsLetters: List[Letters], possibleLetters: List[Letters]): List[Letters] = {
+  def letterListBuilder(numbersAsLetters: List[Letters], possibleLetters: List[Letters]): List[Letters] = {
     numbersAsLetters match {
       case Nil => possibleLetters
       case currentLetters::tail =>
-        val newLetters: List[Letters] = currentLetters.flatMap(char => possibleLetters.map (existingWord => existingWord :+ char))
-        charListBuilder(tail, possibleLetters ++ newLetters)
+        val newLetters: List[Letters] = currentLetters.flatMap(letter => possibleLetters.map (existingWord => existingWord :+ letter))
+        letterListBuilder(tail, newLetters)
     }
   }
 
