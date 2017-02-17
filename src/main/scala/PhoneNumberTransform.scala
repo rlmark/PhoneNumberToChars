@@ -2,7 +2,7 @@ class PhoneNumberTransform {
 
   type Letters = List[Char]
 
-  def toPossibleChars(phoneNumber: List[Int]): List[String] = {
+  def toPossibleStrings(phoneNumber: List[Int]): List[String] = {
     if (phoneNumber.isEmpty) List() else {
       val numberToLetters: List[Letters] = phoneNumber.map(toChar)
       val initialLetters: List[Letters] = numberToLetters.head.map(List(_)) // WHY???
