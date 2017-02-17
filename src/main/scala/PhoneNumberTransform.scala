@@ -1,24 +1,22 @@
 class PhoneNumberTransform {
-  def toPossibleChars(phoneNumber: List[Int]): List[Any] = {
-    val nToChars: List[List[Char]] = phoneNumber.map(toChar)
-    val y = charListBuilder(nToChars).map{ case chars: List[Char] => chars.mkString("")}
-    y
+  type Letters = List[Char]
+  def toPossibleChars(phoneNumber: List[Int]): List[String] = {
+    val nToChars: List[Letters] = phoneNumber.map(toChar)
+    val initialLetters = nToChars.head.map(List(_))
+    val words = charListBuilder(nToChars.tail, initialLetters).map(_.mkString(""))
+    words
   }
 
-  def charListBuilder(nToCharSegment: List[List[Char]]): List[List[Char]] = {
-    nToCharSegment match {
-      case Nil => List()
-      case lastSeg::Nil => List(lastSeg)
-      case seg1::seg2::tail =>
-        val newCharList: List[List[Char]] = seg1.flatMap(c1 => seg2.map (c2 => List(c1, c2)))
-        newCharList ++ charListBuilder(tail)
+  def charListBuilder(numbersAsLetters: List[Letters], possibleLetters: List[Letters]): List[Letters] = {
+    numbersAsLetters match {
+      case Nil => possibleLetters
+      case currentLetters::tail =>
+        println("current letters" + currentLetters)
+        val newLetters: List[Letters] = currentLetters.flatMap(char => possibleLetters.map (existingWord => existingWord :+ char))
+        println("interim list" + newLetters)
+        charListBuilder(tail, possibleLetters ++ newLetters)
     }
   }
-
-  def testSliding(nToCharSegment: List[List[Char]]) = {
-    nToCharSegment.sliding(2)
-  }
-
 
   private def toChar(i : Int): List[Char] = {
     i match {
@@ -34,5 +32,4 @@ class PhoneNumberTransform {
     }
   }
 
-  private  def toStringList(i : Int): List[String] = {
 }
