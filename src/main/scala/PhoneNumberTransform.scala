@@ -14,8 +14,8 @@ class PhoneNumberTransform {
   def letterListBuilder(numbersAsLetters: List[Letters], possibleLetters: List[Letters]): List[Letters] = {
     numbersAsLetters match {
       case Nil => possibleLetters
-      case currentLetters::tail =>
-        val newLetters: List[Letters] = currentLetters.flatMap(letter => possibleLetters.map (existingWord => existingWord :+ letter))
+      case currentLetterSegment::tail =>
+        val newLetters: List[Letters] = possibleLetters.flatMap(existing => currentLetterSegment.map(newLetter => existing :+ newLetter))
         letterListBuilder(tail, newLetters)
     }
   }
